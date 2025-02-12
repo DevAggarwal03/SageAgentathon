@@ -1,13 +1,13 @@
 import Navbar from '../Components/Navbar';
 import { createPublicClient, http } from 'viem';
-import { baseSepolia, hardhat } from 'viem/chains';
+import { arbitrumSepolia } from 'viem/chains';
 import { useAccount } from 'wagmi';
 import TokenMeasure from '../Components/TokenMeasure';
 import LiquidityPoolControl from '../Components/LiquidityPoolControl';
 import Reserves from '../Components/Reserves';
 
 export const publicClient = createPublicClient({ 
-    chain: baseSepolia,
+    chain: arbitrumSepolia,
     transport: http()
   })
 

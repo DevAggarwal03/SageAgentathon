@@ -6,6 +6,7 @@ import ClkJson from '../Constants/ArbitrumSepolia/CLKToken.json'
 import MirJson from '../Constants/ArbitrumSepolia/MIRToken.json'
 import { useEffect, useState } from "react";
 import { formatEther, parseEther } from "viem";
+import { FaExchangeAlt, FaCoins } from 'react-icons/fa';
 
 const LiquidityPoolControl = ({account, symbol}: {account: UseAccountReturnType<Config>, symbol: string}) => {
     const contractAddress = LpJson.address 
@@ -19,9 +20,6 @@ const LiquidityPoolControl = ({account, symbol}: {account: UseAccountReturnType<
     const [removeLiqAmt, setRemoveLiqAmt] = useState<number>(0);
 
     const {writeContract} = useWriteContract();
-    // const { isLoading, isSuccess, isError } = useWaitForTransactionReceipt({
-    //     hash,
-    // });
 
     useEffect(() => {getBalance()}, [])
 
@@ -138,43 +136,121 @@ const LiquidityPoolControl = ({account, symbol}: {account: UseAccountReturnType<
 
 
     return ( 
-        <div className="flex flex-col w-full rounded-lg gap-y-2 bg-gray-300 p-3">
-
-            <div className="flex w-full items-center justify-center gap-x-2">
-                <div>Contract Address: </div>
-                <input type="text" disabled value={contractAddress.slice(0, 5) + "..." + contractAddress.slice(-5)}/>
-            </div>
-
-            <div className="flex w-full flex-col gap-y-1">
-                <div className="w-full flex justify-between rounded-lg gap-x-2">
-                    <input onChange={changeInputClkToken} className="p-1 w-full rounded-lg" placeholder="Amount CLK" id="ClkPoolAmt" type="number" min={50}/>
-                    <input onChange={changeInputMirToken} className="p-1 w-full rounded-lg" placeholder="Amount MIR" id="MirPoolAmt" type="number" min={50}/>
+        <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+            {/* Header */}
+            <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                    <h2 className="text-xl font-bold text-white">{symbol} Token</h2>
+                    <div className="px-3 py-1 bg-gray-700/50 rounded-lg">
+                        <code className="text-sm text-blue-400 font-mono">
+                            {contractAddress.slice(0, 6)}...{contractAddress.slice(-4)}
+                        </code>
+                    </div>
                 </div>
-                <button onClick={approve} className="bg-slate-400 p-1 rounded-md text-white text-xl">Approve Transfer</button>
-                <button onClick={provideLiquidity} className="bg-slate-400 p-1 rounded-md text-white text-xl">Add Liquidity</button>
-            </div>
-
-            <div className="w-full flex flex-col gap-y-1">
-                <input onChange={changeRemoveLiqAmt} id="removeLiquidity" className="p-1 rounded-lg" placeholder="Amount to Remove" type="number" min={50}/>
-                <button onClick={removeLiquidity} className="bg-slate-400 p-1 rounded-md text-white text-xl">Remove Liquidity</button>
-            </div>
-
-            <div className="w-full flex gap-x-2">
-                <div className="w-full flex flex-col gap-y-1">
-                    <input id="ClkToMir" onChange={changeClkToSwap} className="p-1 rounded-lg" placeholder="Amount of CLK" type="number" min={50}/>
-                    <button onClick={swapCLK} className="bg-slate-400 p-1 rounded-md text-white text-xl">Swap CLK</button>
-                </div>
-                <div className="w-full flex flex-col gap-y-1">
-                    <input id="MirToClk" onChange={changeMirToSwap} className="p-1 rounded-lg" placeholder="Amount of MIR" type="number" min={50}/>
-                    <button onClick={swapMIR} className="bg-slate-400 p-1 rounded-md text-white text-xl">Swap MIR</button>
+                <div className="flex items-center justify-between px-4 py-3 bg-gray-700/30 rounded-xl">
+                    <span className="text-gray-400">Balance:</span>
+                    <span className="text-xl font-semibold text-white">{parseFloat(formatEther(balance)).toFixed(4)} {symbol}</span>
                 </div>
             </div>
 
-            <div className="flex w-full items-center justify-center gap-x-2">
-                <div>balance {symbol}: </div>
-                <input type="text" disabled className="text-center" value={parseFloat(formatEther(balance)).toFixed(4) + " " + symbol}/>
+            {/* Add Liquidity Section */}
+            <div className="space-y-4 mb-6">
+                <div className="flex items-center gap-2 text-lg text-white mb-2">
+                    <FaCoins className="text-yellow-500" />
+                    <h3 className="font-semibold">Add Liquidity</h3>
+                </div>
+                <div className="flex gap-2">
+                    <input
+                        onChange={changeInputClkToken}
+                        className="flex-1 px-4 py-3 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        placeholder="Amount CLK"
+                        type="number"
+                        min={50}
+                    />
+                    <input
+                        onChange={changeInputMirToken}
+                        className="flex-1 px-4 py-3 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                        placeholder="Amount MIR"
+                        type="number"
+                        min={50}
+                    />
+                </div>
+                <div className="flex gap-2">
+                    <button 
+                        onClick={approve}
+                        className="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-white font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                    >
+                        Approve Transfer
+                    </button>
+                    <button 
+                        onClick={provideLiquidity}
+                        className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+                    >
+                        Add Liquidity
+                    </button>
+                </div>
             </div>
 
+            {/* Remove Liquidity Section */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2 text-lg text-white mb-2">
+                    <FaCoins className="text-red-500" />
+                    <h3 className="font-semibold">Remove Liquidity</h3>
+                </div>
+                <input
+                    onChange={changeRemoveLiqAmt}
+                    className="w-full px-4 py-3 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                    placeholder="Amount to Remove"
+                    type="number"
+                    min={50}
+                />
+                <button 
+                    onClick={removeLiquidity}
+                    className="w-full bg-red-600 hover:bg-red-700 p-3 rounded-lg text-white font-semibold transition-colors"
+                >
+                    Remove Liquidity
+                </button>
+            </div>
+
+            {/* Swap Section */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-2 text-lg text-white mb-2">
+                    <FaExchangeAlt className="text-purple-500" />
+                    <h3 className="font-semibold">Swap Tokens</h3>
+                </div>
+                <div className="flex gap-x-4">
+                    <div className="flex-1 space-y-2">
+                        <input
+                            onChange={changeClkToSwap}
+                            className="w-full px-4 py-3 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            placeholder="Amount of CLK"
+                            type="number"
+                            min={50}
+                        />
+                        <button 
+                            onClick={swapCLK}
+                            className="w-full bg-purple-600 hover:bg-purple-700 p-3 rounded-lg text-white font-semibold transition-colors"
+                        >
+                            Swap CLK
+                        </button>
+                    </div>
+                    <div className="flex-1 space-y-2">
+                        <input
+                            onChange={changeMirToSwap}
+                            className="w-full px-4 py-3 bg-gray-700/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            placeholder="Amount of MIR"
+                            type="number"
+                            min={50}
+                        />
+                        <button 
+                            onClick={swapMIR}
+                            className="w-full bg-purple-600 hover:bg-purple-700 p-3 rounded-lg text-white font-semibold transition-colors"
+                        >
+                            Swap MIR
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
      );
 }

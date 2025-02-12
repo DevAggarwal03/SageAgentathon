@@ -32,11 +32,11 @@ const Reserves = () => {
         <span>Reserves in the Pool</span>
         <div className="w-full justify-center items-center flex gap-x-3">
             <div className="flex flex-col text-white items-center justify-between gap-y-2">
-                <img src={usdcImg}/>
+                <img className='w-full h-full' src={usdcImg}/>
                 <span>{parseFloat(formatEther(clkReserve)).toFixed(4)} CLK</span>
             </div>
             <div className="flex items-center text-white flex-col justify-between h-full gap-y-2">
-                <img src={usdcImg}/>
+                <img className='w-full h-full' src={"https://ethereum-optimism.github.io/data/DAI/logo.svg"}/>
                 <span>{parseFloat(formatEther(mirReserve)).toFixed(4)} MIR</span> 
             </div>
         </div>
