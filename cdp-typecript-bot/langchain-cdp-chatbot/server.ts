@@ -8,7 +8,7 @@ import clkTokenDetails from "./Constants/ArbitrumSepolia/CLKToken.json";
 import mirTokenDetails from "./Constants/ArbitrumSepolia/MIRToken.json";
 import { privateKeyToAccount } from "viem/accounts";
 import { createWalletClient, encodeFunctionData, http } from "viem";
-import { baseSepolia } from "viem/chains";
+import { arbitrumSepolia } from "viem/chains";
 import { ViemWalletProvider } from "@coinbase/agentkit";
 
 const app = express();
@@ -45,7 +45,7 @@ const account = privateKeyToAccount(
 
 const client = createWalletClient({
     account,
-    chain: baseSepolia,
+    chain: arbitrumSepolia,
     transport: http(),
   });
 
