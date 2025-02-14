@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Token, tokens } from '../tokensList';
-import { useAccount, useBalance, useReadContract, useReadContracts } from 'wagmi';
+import { useAccount, useReadContracts } from 'wagmi';
 import { erc20Abi } from 'viem';
 import { formatUnits } from 'viem';
 import Navbar from '../Components/Navbar';

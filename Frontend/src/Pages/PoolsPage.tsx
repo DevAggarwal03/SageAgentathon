@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Pool, pools } from '../poolsList';
+import { pools } from '../poolsList';
 import Navbar from '../Components/Navbar';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useAccount } from 'wagmi';
@@ -181,19 +181,19 @@ const PoolsPage = () => {
 
                 {/* Expand/Collapse button */}
                 <button
-                  onClick={() => handleExpandPool(pool.id)}
+                  onClick={() => handleExpandPool(pool.id.toString())}
                   className="mt-4 flex items-center gap-2 text-sm text-gray-400 hover:text-white"
                 >
-                  <span>{expandedPool === pool.id ? 'Hide' : 'Swap'}</span>
+                  <span>{expandedPool === pool.id.toString() ? 'Hide' : 'Swap'}</span>
                   <ChevronDownIcon 
                     className={`w-4 h-4 transition-transform ${
-                      expandedPool === pool.id ? 'transform rotate-180' : ''
+                      expandedPool === pool.id.toString() ? 'transform rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {/* Swap Interface */}
-                {expandedPool === pool.id && (
+                {expandedPool === pool.id.toString() && (
                   <div className="mt-4 p-4 bg-gray-900 rounded-xl">
                     {/* From Token */}
                     <div className="bg-gray-800 p-4 rounded-xl">
@@ -205,7 +205,7 @@ const PoolsPage = () => {
                         <input
                           type="number"
                           value={fromAmount}
-                          onChange={(e) => handleSwapInputChange(pool.id, e.target.value)}
+                          onChange={(e) => handleSwapInputChange(pool.id.toString(), e.target.value)}
                           placeholder="0.0"
                           className="bg-transparent text-2xl outline-none flex-1"
                         />
@@ -223,7 +223,7 @@ const PoolsPage = () => {
                     {/* Swap Direction Button */}
                     <div className="flex justify-center -my-3 relative z-10">
                       <button
-                        onClick={() => handleReverseTokens(pool.id)}
+                        onClick={() => handleReverseTokens(pool.id.toString())}
                         className="bg-gray-700 p-2 rounded-xl hover:bg-gray-600"
                       >
                         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

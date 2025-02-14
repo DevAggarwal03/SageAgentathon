@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import { CogIcon } from "@heroicons/react/24/outline";
 import { Token, tokens } from "../tokensList";
-import { useAccount, useReadContracts, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useReadContracts, useSendTransaction } from 'wagmi';
 import { erc20Abi, parseEther } from "viem";
 import { formatUnits } from "viem";
 import axios from 'axios';

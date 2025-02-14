@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { useAccount } from 'wagmi';
 import Navbar from '../Components/Navbar';
 import axios from 'axios';
 
@@ -40,7 +39,7 @@ const ChatPage = () => {
 
     try {
       const endpoint = activeChat === 'wallet' ? '/chat/wallet' : '/chat/pool';
-      const response = await axios.post(`http://localhost:3001${endpoint}`, {
+      const response = await axios.post(`${import.meta.env.VITE_CHAT_BOT_URL}${endpoint}`, {
         message: input
       });
 
